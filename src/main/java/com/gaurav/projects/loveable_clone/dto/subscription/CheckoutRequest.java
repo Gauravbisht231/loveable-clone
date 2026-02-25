@@ -1,0 +1,6 @@
+package com.gaurav.projects.loveable_clone.dto.subscription;
+
+public record CheckoutRequest(
+        Long planId
+) {
+}
