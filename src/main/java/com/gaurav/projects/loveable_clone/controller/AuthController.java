@@ -7,17 +7,20 @@ import com.gaurav.projects.loveable_clone.dto.auth.SignupRequest;
 import com.gaurav.projects.loveable_clone.dto.auth.UserProfileResponse;
 import com.gaurav.projects.loveable_clone.service.IAuthService;
 import com.gaurav.projects.loveable_clone.service.IUserService;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class AuthController {
 
-    private final IAuthService authService;
-    private final IUserService userService;
+    IAuthService authService;
+    IUserService userService;
 
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> signUp(@RequestBody SignupRequest request){

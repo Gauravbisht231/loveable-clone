@@ -1,14 +1,19 @@
 package com.gaurav.projects.loveable_clone.entity;
 
-import jakarta.persistence.Entity;
-import lombok.AccessLevel;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name = "plans")
 public class Plan {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String name;
     String stripePriceId;

@@ -1,3 +1,21 @@
 spring:
   application:
     name: loveable-clone
+    description: A clone of the Loveable app for demonstration purposes
+
+  datasource:
+    url: jdbc:postgresql://localhost:9000/testDB
+    username: root
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-init-sql: SET TIME ZONE 'Asia/Kolkata'
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect

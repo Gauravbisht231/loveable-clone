@@ -1,21 +1,30 @@
 package com.gaurav.projects.loveable_clone.entity;
 
 import com.gaurav.projects.loveable_clone.enums.SubscriptionStatus;
-import jakarta.persistence.Entity;
-import lombok.AccessLevel;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.Instant;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Subscription {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-//    @ManyToOne //subscription belongs to one user
+
+    @ManyToOne
     User user;
+
+    @ManyToOne
     Plan plan;
+
+    @Enumerated(EnumType.STRING)
     SubscriptionStatus status;
     String stripeSubscriptionId;
     String stripeCustomerId;

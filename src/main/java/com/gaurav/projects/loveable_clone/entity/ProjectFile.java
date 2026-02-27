@@ -1,9 +1,7 @@
 package com.gaurav.projects.loveable_clone.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import lombok.AccessLevel;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.Instant;
@@ -11,7 +9,12 @@ import java.time.Instant;
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ProjectFile {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @ManyToOne
     Project project;
@@ -19,7 +22,11 @@ public class ProjectFile {
     String minioObjectKey;
     Instant createdAt;
     Instant updatedAt;
+
+    @ManyToOne
     User createdBy;
+
+    @ManyToOne
     User updatedBy;
 
 }
