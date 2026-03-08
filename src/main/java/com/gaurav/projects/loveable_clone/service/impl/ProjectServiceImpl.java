@@ -5,6 +5,7 @@ import com.gaurav.projects.loveable_clone.dto.project.ProjectResponse;
 import com.gaurav.projects.loveable_clone.dto.project.ProjectSummaryResponse;
 import com.gaurav.projects.loveable_clone.entity.Project;
 import com.gaurav.projects.loveable_clone.entity.User;
+import com.gaurav.projects.loveable_clone.error.ResourceNotFoundException;
 import com.gaurav.projects.loveable_clone.mapper.ProjectMapper;
 import com.gaurav.projects.loveable_clone.repository.ProjectRepository;
 import com.gaurav.projects.loveable_clone.repository.UserRepository;
@@ -16,7 +17,6 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,9 +36,9 @@ public class ProjectServiceImpl implements IProjectService {
     @Override
     public ProjectResponse getProjectById(Long id, Long userId) {
 
+        Project project = getAccessibleProjectById(id, userId);
+        return projectMapper.toProjectResponse(project);
 
-
-                return null;
     }
 
     @Override
@@ -62,5 +62,12 @@ public class ProjectServiceImpl implements IProjectService {
     @Override
     public void deleteProject(Long id, Long userId) {
 
+    }
+
+
+    private Project getAccessibleProjectById(Long id, Long userId) {
+        return projectRepository.findAccessbileProjectById(id, userId).orElseThrow(
+                () -> new ResourceNotFoundException("Project", id.toString())
+        );
     }
 }

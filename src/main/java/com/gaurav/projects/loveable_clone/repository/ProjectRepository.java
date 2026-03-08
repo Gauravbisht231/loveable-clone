@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
@@ -22,4 +23,5 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     )
     List<Project> findAllAccessibleByUser(@Param("userId") Long userId);
 
+    Optional<Project> findAccessbileProjectById(Long id, Long userId);
 }

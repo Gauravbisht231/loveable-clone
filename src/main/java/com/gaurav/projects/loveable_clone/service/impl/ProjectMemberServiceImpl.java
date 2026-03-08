@@ -2,7 +2,7 @@ package com.gaurav.projects.loveable_clone.service.impl;
 
 import com.gaurav.projects.loveable_clone.dto.member.InviteMemberRequest;
 import com.gaurav.projects.loveable_clone.dto.member.MemberResponse;
-import com.gaurav.projects.loveable_clone.dto.member.UpdateRoleRequest;
+import com.gaurav.projects.loveable_clone.dto.member.UpdateMemberRoleRequest;
 import com.gaurav.projects.loveable_clone.service.ProjectMemberService;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
     }
 
     @Override
-    public MemberResponse updateMemberRole(Long projectId, Long memberId, UpdateRoleRequest request, Long userId) {
+    public MemberResponse updateMemberRole(Long projectId, Long memberId, UpdateMemberRoleRequest request, Long userId) {
         return null;
     }
 
