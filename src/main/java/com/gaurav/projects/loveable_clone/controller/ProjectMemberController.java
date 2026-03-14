@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -30,7 +32,7 @@ public class ProjectMemberController {
         return ResponseEntity.ok(projectMemberService.getProjectMembers(projectId, userId));
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<MemberResponse> inviteMember(
             @PathVariable Long projectId,
             @RequestBody @Valid  InviteMemberRequest request
@@ -48,17 +50,17 @@ public class ProjectMemberController {
             @RequestBody @Valid UpdateMemberRoleRequest request
     ) {
         Long userId = 1L;
-
         return ResponseEntity.ok(projectMemberService.updateMemberRole(projectId, memberId, request, userId));
     }
 
     @DeleteMapping("/{memberId}")
-    public ResponseEntity<MemberResponse> deleteProjectMember(
+    public ResponseEntity<Void> removeMember(
             @PathVariable Long projectId,
             @PathVariable Long memberId
     ) {
         Long userId = 1L;
+        projectMemberService.removeProjectMember(projectId, memberId, userId);
+        return ResponseEntity.noContent().build();
 
-        return ResponseEntity.ok(projectMemberService.deleteMember(projectId, memberId, userId));
-    }
+  }
 }

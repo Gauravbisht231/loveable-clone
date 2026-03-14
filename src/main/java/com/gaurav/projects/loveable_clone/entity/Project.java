@@ -14,7 +14,11 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name="projects")
+@Table(name="projects",
+indexes ={
+        @Index(name ="idx_projects_updated_at_desc", columnList = "updated_at DESC, deleted_at" ),
+        @Index(name ="idx_projects_deleted_at", columnList = "deleted_at")
+})
 public class Project {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -23,7 +27,7 @@ public class Project {
     String name;
 
     @ManyToOne
-            @JoinColumn(name="owner_id", nullable=false)
+    @JoinColumn(name="owner_id", nullable=false)
     User owner;
 
     Boolean isPublic =false;
