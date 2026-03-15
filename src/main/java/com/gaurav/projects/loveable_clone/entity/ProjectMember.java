@@ -30,5 +30,6 @@ public class ProjectMember {
     ProjectRole role;
 
     Instant createdAt;
+    Instant invitedAt;
     Instant acceptedAt;
 }
