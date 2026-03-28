@@ -7,9 +7,13 @@ import com.gaurav.projects.loveable_clone.entity.User;
 import com.gaurav.projects.loveable_clone.error.BadRequestException;
 import com.gaurav.projects.loveable_clone.mapper.UserMapper;
 import com.gaurav.projects.loveable_clone.repository.UserRepository;
+import com.gaurav.projects.loveable_clone.security.AuthUtil;
 import com.gaurav.projects.loveable_clone.service.IAuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +25,8 @@ public class AuthServiceImpl implements IAuthService {
     UserRepository userRepository;
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
+    AuthUtil authUtil;
+    AuthenticationManager authenticationManager;
 
 
     @Override
@@ -35,11 +41,20 @@ public class AuthServiceImpl implements IAuthService {
        user.setPassword(passwordEncoder.encode(request.password()));
        userRepository.save(user);
 
-       return new AuthResponse("dymmy", userMapper.toUserProfileResponse(user));
+       // generate a token and return the response
+        String token = authUtil.generateAccessToken(user);
+
+       return new AuthResponse(token, userMapper.toUserProfileResponse(user));
     }
 
     @Override
     public AuthResponse login(LoginRequest request) {
-        return null;
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.username(), request.password())
+        );
+        User user = (User) authentication.getPrincipal();
+        String token = authUtil.generateAccessToken(user);
+        return new AuthResponse(token, userMapper.toUserProfileResponse(user));
+
     }
 }
